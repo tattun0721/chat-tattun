@@ -12,7 +12,7 @@ PREFS="北海道 青森県 岩手県 宮城県 秋田県 山形県 福島県 茨
 
 def prefecture(region, address):
     t = " ".join(str(x or "") for x in (region,address))
-    m = re.search(r"JP[-_](\\d{1,2})",t.upper())
+    m = re.search(r"JP[-_](\d{1,2})",t.upper())
     if m and 1<=int(m.group(1))<=47:return PREFS[int(m.group(1))-1]
     for p in PREFS:
         if p in t:return p
@@ -43,7 +43,7 @@ def latest_release():
     try:
         with urlopen("https://stac.overturemaps.org/catalog.json",timeout=25) as r:
             v=json.load(r)["latest"]
-            if re.fullmatch(r"20\\d{2}-\\d{2}-\\d{2}\\.\\d+",v):return v
+            if re.fullmatch(r"20\d{2}-\d{2}-\d{2}\.\d+",v):return v
     except Exception as e:print("STAC fallback:",str(e),flush=True)
     return "2026-10-21.0"
 
@@ -76,7 +76,7 @@ def collect(release):
             read+=1
             x=normalize(row)
             if not x:continue
-            key=(re.sub(r"\\s+","",x["name"]).casefold(),round(x["lat"],3),round(x["lon"],3))
+            key=(re.sub(r"\s+","",x["name"]).casefold(),round(x["lat"],3),round(x["lon"],3))
             if key not in seen or (x["site"] and not seen[key]["site"]):
                 seen[key]=x
         if read%10000<2500: print("Scanned",read,"eligible",len(seen),flush=True)
