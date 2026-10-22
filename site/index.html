@@ -1,0 +1,57 @@
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CHAT TATTUN | 日本全国の宿泊施設検索</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#090b0d;color:#eee;font-family:system-ui,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif}a{color:#e0b16d}.hero{padding:62px 22px 72px;min-height:290px;background:linear-gradient(115deg,#10161a,#152d2f 45%,#70532e 130%);border-bottom:1px solid #644d2f}.wrap{max-width:1140px;margin:auto}.logo{font-size:21px;font-weight:900;letter-spacing:.18em}.logo span{color:#edbb73}.hero h1{font-size:clamp(28px,5vw,52px);line-height:1.22;margin:40px 0 12px}.hero p{max-width:780px;color:#d1d6d1;line-height:1.8;font-size:14px}.main{max-width:1140px;padding:0 18px 65px;margin:-27px auto 0;position:relative}.box{background:#161a1d;border:1px solid #41403a;border-radius:16px;padding:23px;margin-bottom:18px;box-shadow:0 12px 28px #0004}h2{font-size:21px;margin:0 0 16px}label{display:block;color:#d6b68c;font-size:12px;margin-bottom:6px}input,select{width:100%;background:#0c1113;border:1px solid #53544d;color:#fff;border-radius:10px;padding:12px;font:inherit;min-height:46px}input:focus,select:focus{outline:2px solid #b78943}button{background:#c79b56;color:#101010;border:0;border-radius:10px;padding:12px 17px;font-weight:800;cursor:pointer}button.alt{background:#293033;color:#e9d0a8;border:1px solid #766244}.fields{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.small{font-size:12px;line-height:1.7;color:#a4aba9}.counter{color:#e6bd81;font-weight:800}.list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:18px}.hotel{border:1px solid #404b45;border-radius:12px;padding:17px;background:#10181a;min-width:0}.hotel strong{display:block;font-size:17px;margin-bottom:8px}.hotel .place{font-size:13px;color:#c7d1cb;min-height:40px}.hotel .kind{font-size:11px;color:#e6be81}.links{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}.links a{text-decoration:none;font-size:12px;border:1px solid #877354;padding:9px;border-radius:8px}.links a:hover{background:#2e352d}#status{line-height:1.8;font-size:13px}.badge{color:#aebfbb;font-size:11px}.filters{display:flex;flex-wrap:wrap;gap:7px}.filters button{font-size:12px;padding:9px 11px;background:#2d3839;color:#e0d4be;border:1px solid #485451}#more{display:none;margin:22px auto}.fine{font-size:12px;color:#c1b5a2}.maplink{background:transparent;color:#dcb37e;border:1px solid #87704e}.summary{display:flex;gap:15px;align-items:baseline;flex-wrap:wrap}.summary .count{font-size:23px;color:#e2b16b;font-weight:900}.warning{padding:13px 15px;background:#332815;border-left:3px solid #d19e5d;border-radius:6px;font-size:12px;line-height:1.7;margin-top:12px}
+@media(max-width:780px){.fields{grid-template-columns:1fr 1fr}.fields>div:first-child{grid-column:1/-1}.list{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:550px){.fields,.list{grid-template-columns:1fr}.fields>div:first-child{grid-column:auto}.main{padding:0 12px 40px}.box{padding:16px}.hero{padding:30px 16px 60px}.hero h1{margin-top:30px}}
+</style></head><body>
+<header class="hero"><div class="wrap"><div class="logo">CHAT <span>TATTUN</span></div><h1>日本全国の宿を、<br>もっと自由に探す。</h1><p>実在する施設を公開データから検索。都道府県・市区町村・宿名・あいまいキーワードに対応。未確認の設備や公式サイトを勝手に保証しません。</p></div></header>
+<main class="main">
+<section class="box"><h2>全国の宿泊施設を検索</h2>
+<div class="fields">
+<div><label for="q">ホテル名・旅館名・あいまい検索</label><input id="q" placeholder="例：白浜、海の見えるホテル、箱根の旅館"></div>
+<div><label for="pref">都道府県</label><select id="pref"><option value="">全国すべて</option></select></div>
+<div><label for="city">市区町村</label><input id="city" placeholder="例：奈良市・白浜町"></div></div>
+<div class="actions"><button id="search">条件で検索</button><button class="alt" id="clear">条件をクリア</button><button class="maplink" id="maps">Googleマップでも探す ↗</button></div>
+<div class="warning">設備・温泉・景観・喫煙室はデータ元で確認できない場合があるため、検索語でヒットしても設備の一致を保証しません。予約前に施設へ確認してな。</div></section>
+<section class="box"><h2>全国ホテル・旅館データベース</h2>
+<div class="summary"><span class="count" id="count">読み込み中</span><span class="small" id="meta">実際に取得した掲載件数を表示するで</span></div>
+<p id="status">宿泊施設データを読み込んでいます…</p>
+<div class="list" id="results"></div>
+<div style="text-align:center"><button id="more">さらに表示する</button></div>
+<p class="small">掲載Webサイトは公式サイトとは限りません。登録がある場合「登録サイト」と表示します。宿の詳細・営業状況・空室・料金は確認してな。</p></section>
+<footer class="small">Data © Overture Maps Foundation and contributors. 公開宿泊施設リストは行政の営業許可名簿そのものではありません。CHAT TATTUN</footer>
+</main>
+<script>
+const prefs='北海道 青森県 岩手県 宮城県 秋田県 山形県 福島県 茨城県 栃木県 群馬県 埼玉県 千葉県 東京都 神奈川県 新潟県 富山県 石川県 福井県 山梨県 長野県 岐阜県 静岡県 愛知県 三重県 滋賀県 京都府 大阪府 兵庫県 奈良県 和歌山県 鳥取県 島根県 岡山県 広島県 山口県 徳島県 香川県 愛媛県 高知県 福岡県 佐賀県 長崎県 熊本県 大分県 宮崎県 鹿児島県 沖縄県'.split(' ');
+const $=id=>document.getElementById(id);
+for(const p of prefs){const o=document.createElement('option');o.textContent=p;o.value=p;$('pref').append(o)}
+let all=[],matches=[],cursor=0;
+function mapUrl(h){return 'https://www.google.com/maps/search/?'+new URLSearchParams({api:'1',query:(h? h.name+' '+(h.address||h.city||h.pref):[$('pref').value,$('city').value,$('q').value,'ホテル 旅館'].filter(Boolean).join(' '))})}
+const word=s=>String(s||'').normalize('NFKC').toLowerCase().replace(/\s+/g,'');
+function match(h){const p=$('pref').value.trim(),c=word($('city').value),q=word($('q').value);
+if(p&&h.pref!==p)return false;
+if(c&&!word([h.city,h.address].join(' ')).includes(c))return false;
+if(q){const text=word([h.name,h.pref,h.city,h.address,h.type].join(' '));if(!q.split(/[、,　\s]+/).every(t=>text.includes(t)))return false}
+return true;}
+function node(tag,cls,txt){const e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
+function draw(){const items=matches.slice(cursor,cursor+36);cursor+=items.length;for(const h of items){
+const card=node('article','hotel');card.append(node('strong','',h.name),node('div','kind',h.type||'宿泊施設'),node('p','place',[h.pref,h.city,h.address].filter(Boolean).join(' ')));
+const links=node('div','links');const a=node('a','','Googleマップで確認 ↗');a.href=mapUrl(h);a.target='_blank';a.rel='noopener noreferrer';links.append(a);
+if(h.site&&/^https?:\/\//.test(h.site)){const b=node('a','','登録Webサイト ↗');b.href=h.site;b.target='_blank';b.rel='noopener noreferrer';links.append(b)}card.append(links);$('results').append(card)}
+$('more').style.display=cursor<matches.length?'inline-block':'none';
+$('status').textContent=matches.length.toLocaleString('ja-JP')+'軒が検索条件に一致。'+cursor+'軒まで表示中。';}
+function search(){if(!all.length)return;matches=all.filter(match);cursor=0;$('results').replaceChildren();draw();}
+$('search').addEventListener('click',search);$('q').addEventListener('keydown',e=>{if(e.key==='Enter')search()});$('city').addEventListener('keydown',e=>{if(e.key==='Enter')search()});
+$('clear').addEventListener('click',()=>{$('q').value='';$('pref').value='';$('city').value='';search()});
+$('maps').addEventListener('click',()=>window.open(mapUrl(), '_blank','noopener,noreferrer'));
+$('more').addEventListener('click',draw);
+(async()=>{
+try{const [r,m]=await Promise.all([fetch('./hotels.json'),fetch('./catalog-info.json')]);if(!r.ok)throw Error('data status '+r.status);all=await r.json();
+if(!Array.isArray(all))throw Error('invalid catalog');
+const info=m.ok?await m.json():{};const n=all.length;
+$('count').textContent=n.toLocaleString('ja-JP')+'軒を収録';
+$('meta').textContent='データ元: '+(info.source||'Overture Maps')+' ／ データ版: '+(info.release||'未確認');
+if(!n){$('status').textContent='全国データはまだ未取得です。GitHub Actionsでデータ取得を実行してください。';return}
+search();}
+catch(e){$('count').textContent='取得失敗';$('status').textContent='データ読み込みエラー: '+e.message+'。サイトをHTTP(S)で開くか、データ取得処理を実行してな。'}
+})();
+</script></body></html>
