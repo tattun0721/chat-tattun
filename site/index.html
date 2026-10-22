@@ -35,14 +35,14 @@ return true;}
 function node(tag,cls,txt){const e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
 function draw(){const items=matches.slice(cursor,cursor+36);cursor+=items.length;for(const h of items){
 const card=node('article','hotel');card.append(node('strong','',h.name),node('div','kind',h.type||'宿泊施設'),node('p','place',[h.pref,h.city,h.address].filter(Boolean).join(' ')));
-const links=node('div','links');const a=node('a','','Googleマップで確認 ↗');a.href=mapUrl(h);a.target='_blank';a.rel='noopener noreferrer';links.append(a);
-if(h.site&&/^https?:\/\//.test(h.site)){const b=node('a','','登録Webサイト ↗');b.href=h.site;b.target='_blank';b.rel='noopener noreferrer';links.append(b)}card.append(links);$('results').append(card)}
+const links=node('div','links');const a=node('a','','Googleマップで確認 ↗');a.href=mapUrl(h);a.target='_self';links.append(a);
+if(h.site&&/^https?:\/\//.test(h.site)){const b=node('a','','登録Webサイト ↗');b.href=h.site;b.target='_self';links.append(b)}card.append(links);$('results').append(card)}
 $('more').style.display=cursor<matches.length?'inline-block':'none';
 $('status').textContent=matches.length.toLocaleString('ja-JP')+'軒が検索条件に一致。'+cursor+'軒まで表示中。';}
 function search(){if(!all.length)return;matches=all.filter(match);cursor=0;$('results').replaceChildren();draw();}
 $('search').addEventListener('click',search);$('q').addEventListener('keydown',e=>{if(e.key==='Enter')search()});$('city').addEventListener('keydown',e=>{if(e.key==='Enter')search()});
 $('clear').addEventListener('click',()=>{$('q').value='';$('pref').value='';$('city').value='';search()});
-$('maps').addEventListener('click',()=>window.open(mapUrl(), '_blank','noopener,noreferrer'));
+$('maps').addEventListener('click',()=>{window.location.assign(mapUrl());});
 $('more').addEventListener('click',draw);
 (async()=>{
 try{const [r,m]=await Promise.all([fetch('./hotels.json'),fetch('./catalog-info.json')]);if(!r.ok)throw Error('data status '+r.status);all=await r.json();
