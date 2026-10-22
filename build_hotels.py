@@ -10,6 +10,37 @@ from urllib.request import urlopen
 
 PREFS="北海道 青森県 岩手県 宮城県 秋田県 山形県 福島県 茨城県 栃木県 群馬県 埼玉県 千葉県 東京都 神奈川県 新潟県 富山県 石川県 福井県 山梨県 長野県 岐阜県 静岡県 愛知県 三重県 滋賀県 京都府 大阪府 兵庫県 奈良県 和歌山県 鳥取県 島根県 岡山県 広島県 山口県 徳島県 香川県 愛媛県 高知県 福岡県 佐賀県 長崎県 熊本県 大分県 宮崎県 鹿児島県 沖縄県".split()
 
+
+# Boundaries: amay077/JapanPrefGeoJson, derived from Data of Japan public-domain data.
+# Only used for missing prefectures, never invent accommodation records.
+POLYGONS = []
+GEO_TREE = None
+def load_prefecture_boundaries():
+    global POLYGONS, GEO_TREE
+    from shapely.geometry import shape
+    from shapely.strtree import STRtree
+    POLYGONS = []
+    for i, pref in enumerate(PREFS, 1):
+        u = f"https://raw.githubusercontent.com/amay077/JapanPrefGeoJson/master/prefs/{i:02}.geojson"
+        try:
+            with urlopen(u, timeout=25) as f:
+                feature = json.load(f)
+            POLYGONS.append((shape(feature["geometry"]), pref))
+        except Exception as e:
+            print("Boundary download failed:",pref,str(e)[:120],flush=True)
+    if POLYGONS:
+        GEO_TREE = STRtree([g for g,_ in POLYGONS])
+    print("Prefecture boundaries available:",len(POLYGONS),"/47",flush=True)
+
+def prefecture_at(lon,lat):
+    if GEO_TREE is None:return ""
+    from shapely.geometry import Point
+    point=Point(lon,lat)
+    for i in GEO_TREE.query(point):
+        geom,pref = POLYGONS[int(i)]
+        if geom.covers(point):return pref
+    return ""
+
 def prefecture(region, address):
     t = " ".join(str(x or "") for x in (region,address))
     m = re.search(r"JP[-_](\d{1,2})",t.upper())
@@ -27,7 +58,7 @@ def normalize(r):
     if str(status or "").lower()=="permanently_closed":return None
     # Bounding box can contain neighboring countries; require confirmed Japan address.
     address,city,region=str(address or ""),str(city or ""),str(region or "")
-    pref=prefecture(region,address)
+    pref=prefecture(region,address) or prefecture_at(lon,lat)
     if not pref and str(country or "").upper() not in ("JP","JPN"):return None
     name=unicodedata.normalize("NFKC",str(name)).strip()
     if not name:return None
@@ -98,6 +129,7 @@ def main():
     args=p.parse_args()
     if args.test:return selftest()
     release=args.release or latest_release()
+    load_prefecture_boundaries()
     rows=collect(release)
     if not rows:raise RuntimeError("No records fetched; refusing to overwrite existing catalog")
     rows.sort(key=lambda r:(r["pref"],r["city"],r["name"]))
