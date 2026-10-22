@@ -1,0 +1,55 @@
+name: Fetch real Japan lodging catalog
+on:
+  push:
+    branches: [main]
+    paths:
+      - "build_hotels.py"
+      - "requirements-build.txt"
+      - ".github/workflows/import-lodging.yml"
+  workflow_dispatch:
+  schedule:
+    - cron: '20 2 1 * *'
+permissions:
+  contents: write
+jobs:
+  import-real-hotels:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install DuckDB
+        run: pip install -r requirements-build.txt
+      - name: Validate parser on temporary synthetic tests
+        run: python build_hotels.py --test
+      - name: Query real Overture Places data in Japan
+        run: python -u build_hotels.py --output site/hotels.json
+      - name: Print real imported count
+        run: python -c "import json; x=json.load(open('site/catalog-info.json')); print('REAL IMPORT COUNT:', x['count'])"
+      - name: Commit downloaded real data
+        run: |
+          git config user.name "chat-tattun-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add site/hotels.json site/catalog-info.json
+          if git diff --cached --quiet; then
+            echo "Catalog unchanged"
+          else
+            git commit -m "Import actual Japan lodging records from Overture Maps"
+            git push
+          fi
+      - name: Package updated Netlify site
+        run: |
+          cd site
+          zip -9 ../chat-tattun-deploy.zip index.html hotels.json catalog-info.json
+      - name: Upload deploy ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: chat-tattun-deploy
+          path: chat-tattun-deploy.zip
+          retention-days: 30
