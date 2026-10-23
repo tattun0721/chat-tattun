@@ -1,0 +1,58 @@
+name: Publish CHAT TATTUN to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+      - ".github/workflows/publish-pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enable GitHub Pages when possible
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -eu
+          status=$(curl --silent --output /tmp/pages-check.json --write-out '%{http_code}' \
+            -H "Authorization: Bearer $GH_TOKEN" -H 'Accept: application/vnd.github+json' \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/pages")
+          if [ "$status" = "200" ]; then
+            echo "Pages already enabled"
+          elif [ "$status" = "404" ]; then
+            echo "Trying to enable GitHub Pages using the workflow token..."
+            code=$(curl --silent --output /tmp/pages-enable.json --write-out '%{http_code}' \
+              -X POST -H "Authorization: Bearer $GH_TOKEN" \
+              -H 'Accept: application/vnd.github+json' -H 'Content-Type: application/json' \
+              -d '{"build_type":"workflow"}' \
+              "https://api.github.com/repos/$GITHUB_REPOSITORY/pages")
+            echo "Pages enable response: $code"
+            if [ "$code" != "201" ] && [ "$code" != "200" ]; then
+              echo "::warning::If deployment fails, go to Settings > Pages > Source > GitHub Actions"
+            fi
+          else
+            echo "::warning::Pages status returned HTTP $status; check Settings > Pages"
+          fi
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./site
+      - id: deployment
+        uses: actions/deploy-pages@v4
