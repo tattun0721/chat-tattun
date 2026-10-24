@@ -6,6 +6,8 @@ on:
       - "tools/collect_official_photo_metadata.py"
       - ".github/workflows/collect-official-photo-metadata.yml"
   workflow_dispatch:
+  schedule:
+    - cron: '47 4 * * *'
 permissions:
   contents: write
 jobs:
@@ -19,12 +21,12 @@ jobs:
         with: {python-version: '3.12'}
       - run: pip install requests rapidfuzz
       - name: Inspect registered hotel sites for real representative images
-        run: python -u tools/collect_official_photo_metadata.py --limit 45000 --offset 0 --workers 28
+        run: python -u tools/collect_official_photo_metadata.py --limit 8000 --offset 0 --workers 24 --retry-days 60
       - name: Record results
         run: |
           git config user.name 'chat-tattun-bot'
           git config user.email 'actions@users.noreply.github.com'
-          git add site/website-preview-photos.json
+          git add site/website-preview-photos.json site/photo-scan-state.json
           if ! git diff --cached --quiet; then
             git commit -m "Record property website photo metadata"
             git push
@@ -32,4 +34,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: property-website-photo-metadata
-          path: site/website-preview-photos.json
+          path: |
+            site/website-preview-photos.json
+            site/photo-scan-state.json

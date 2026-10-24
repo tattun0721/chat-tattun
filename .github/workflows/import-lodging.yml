@@ -46,7 +46,7 @@ jobs:
       - name: Package updated Netlify site
         run: |
           cd site
-          zip -9 ../chat-tattun-deploy.zip index.html hotels.json catalog-info.json
+          zip -9 ../chat-tattun-deploy.zip index.html hotels.json catalog-info.json website-preview-photos.json
       - name: Upload deploy ZIP
         uses: actions/upload-artifact@v4
         with:

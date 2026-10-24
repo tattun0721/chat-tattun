@@ -2,6 +2,7 @@
 <style>
 *{box-sizing:border-box}body{margin:0;background:#090b0d;color:#eee;font-family:system-ui,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif}a{color:#e0b16d}.hero{padding:62px 22px 72px;min-height:290px;background:linear-gradient(115deg,#10161a,#152d2f 45%,#70532e 130%);border-bottom:1px solid #644d2f}.wrap{max-width:1140px;margin:auto}.logo{font-size:21px;font-weight:900;letter-spacing:.18em}.logo span{color:#edbb73}.hero h1{font-size:clamp(28px,5vw,52px);line-height:1.22;margin:40px 0 12px}.hero p{max-width:780px;color:#d1d6d1;line-height:1.8;font-size:14px}.main{max-width:1140px;padding:0 18px 65px;margin:-27px auto 0;position:relative}.box{background:#161a1d;border:1px solid #41403a;border-radius:16px;padding:23px;margin-bottom:18px;box-shadow:0 12px 28px #0004}h2{font-size:21px;margin:0 0 16px}label{display:block;color:#d6b68c;font-size:12px;margin-bottom:6px}input,select{width:100%;background:#0c1113;border:1px solid #53544d;color:#fff;border-radius:10px;padding:12px;font:inherit;min-height:46px}input:focus,select:focus{outline:2px solid #b78943}button{background:#c79b56;color:#101010;border:0;border-radius:10px;padding:12px 17px;font-weight:800;cursor:pointer}button.alt{background:#293033;color:#e9d0a8;border:1px solid #766244}.fields{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.small{font-size:12px;line-height:1.7;color:#a4aba9}.counter{color:#e6bd81;font-weight:800}.list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:18px}.hotel{border:1px solid #404b45;border-radius:12px;padding:17px;background:#10181a;min-width:0}.hotel strong{display:block;font-size:17px;margin-bottom:8px}.hotel .place{font-size:13px;color:#c7d1cb;min-height:40px}.hotel .kind{font-size:11px;color:#e6be81}.links{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}.links a{text-decoration:none;font-size:12px;border:1px solid #877354;padding:9px;border-radius:8px}.links a:hover{background:#2e352d}#status{line-height:1.8;font-size:13px}.badge{color:#aebfbb;font-size:11px}.filters{display:flex;flex-wrap:wrap;gap:7px}.filters button{font-size:12px;padding:9px 11px;background:#2d3839;color:#e0d4be;border:1px solid #485451}#more{display:none;margin:22px auto}.fine{font-size:12px;color:#c1b5a2}.maplink{background:transparent;color:#dcb37e;border:1px solid #87704e}.summary{display:flex;gap:15px;align-items:baseline;flex-wrap:wrap}.summary .count{font-size:23px;color:#e2b16b;font-weight:900}.warning{padding:13px 15px;background:#332815;border-left:3px solid #d19e5d;border-radius:6px;font-size:12px;line-height:1.7;margin-top:12px}
 @media(max-width:780px){.fields{grid-template-columns:1fr 1fr}.fields>div:first-child{grid-column:1/-1}.list{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:550px){.fields,.list{grid-template-columns:1fr}.fields>div:first-child{grid-column:auto}.main{padding:0 12px 40px}.box{padding:16px}.hero{padding:30px 16px 60px}.hero h1{margin-top:30px}}
+.hotel{padding:0;overflow:hidden}.hotel-body{padding:17px;min-width:0}.hotel-photo-link{display:block;position:relative;aspect-ratio:16/9;overflow:hidden;background:#1e2929;text-decoration:none}.hotel-photo{width:100%;height:100%;object-fit:cover;display:block;transition:transform .25s}.hotel-photo-link:hover .hotel-photo{transform:scale(1.025)}.photo-source{position:absolute;bottom:8px;left:9px;max-width:calc(100% - 18px);padding:4px 7px;border-radius:5px;background:#10191bdc;color:#fff;font-size:11px}.photo-not-available{display:flex;align-items:center;justify-content:center;min-height:110px;padding:15px;background:linear-gradient(130deg,#1a2426,#293334);color:#b9c7c4;text-align:center;font-size:12px;line-height:1.6}.hotel strong{overflow-wrap:anywhere}.hotel .place{overflow-wrap:anywhere}.hotel .links a{overflow-wrap:anywhere}.photo-count{color:#dfbb83;font-size:12px}
 </style></head><body>
 <header class="hero"><div class="wrap"><div class="logo">CHAT <span>TATTUN</span></div><h1>日本全国の宿を、<br>もっと自由に探す。</h1><p>実在する施設を公開データから検索。都道府県・市区町村・宿名・あいまいキーワードに対応。未確認の設備や公式サイトを勝手に保証しません。</p></div></header>
 <main class="main">
@@ -13,7 +14,7 @@
 <div class="actions"><button id="search">条件で検索</button><button class="alt" id="clear">条件をクリア</button><button class="maplink" id="maps">Googleマップでも探す ↗</button></div>
 <div class="warning">設備・温泉・景観・喫煙室はデータ元で確認できない場合があるため、検索語でヒットしても設備の一致を保証しません。予約前に施設へ確認してな。</div></section>
 <section class="box"><h2>全国ホテル・旅館データベース</h2>
-<div class="summary"><span class="count" id="count">読み込み中</span><span class="small" id="meta">実際に取得した掲載件数を表示するで</span></div>
+<div class="summary"><span class="count" id="count">読み込み中</span><span class="small" id="meta">実際に取得した掲載件数を表示するで</span><span class="photo-count" id="photo-count"></span></div>
 <p id="status">宿泊施設データを読み込んでいます…</p>
 <div class="list" id="results"></div>
 <div style="text-align:center"><button id="more">さらに表示する</button></div>
@@ -25,6 +26,28 @@ const prefs='北海道 青森県 岩手県 宮城県 秋田県 山形県 福島�
 const $=id=>document.getElementById(id);
 for(const p of prefs){const o=document.createElement('option');o.textContent=p;o.value=p;$('pref').append(o)}
 let all=[],matches=[],cursor=0;
+const photosById=new Map(),photosByName=new Map();
+function photoName(value){return String(value||'').normalize('NFKC').toLowerCase().replace(/[\s\p{P}\p{S}]/gu,'')}
+function photoUrlSafe(value){try{const u=new URL(value);return u.protocol==='https:'&&!u.username&&!u.password&&!/\.(svg|gif|ico)(?:$|\?)/i.test(u.pathname)}catch{return false}}
+function host(value){try{return new URL(value).hostname.replace(/^www\./,'').toLowerCase()}catch{return ''}}
+function photoFor(h){
+ const direct=photosById.get(h.id);if(direct)return direct;
+ const candidates=photosByName.get(photoName(h.name))||[];
+ const sameArea=candidates.filter(p=>p.pref===h.pref&&(!p.city||!h.city||p.city===h.city));
+ if(sameArea.length===1)return sameArea[0];
+ const siteHost=host(h.site);
+ if(siteHost){const sameSite=candidates.filter(p=>host(p.source)===siteHost);if(sameSite.length===1)return sameSite[0]}
+ return candidates.length===1&&(!candidates[0].pref||candidates[0].pref===h.pref)?candidates[0]:null;
+}
+function indexPhotos(payload){
+ for(const photo of payload?.photos||[]){
+  if(!photo?.url||!photoUrlSafe(photo.url)||!photo.name)continue;
+  if(photo.id)photosById.set(photo.id,photo);
+  const key=photoName(photo.name),array=photosByName.get(key)||[];
+  array.push(photo);photosByName.set(key,array);
+ }
+ $('photo-count').textContent=`掲載サイトの画像 ${Number(payload?.count||photosById.size||0).toLocaleString('ja-JP')}件を参照`;
+}
 function mapUrl(h){return 'https://www.google.com/maps/search/?'+new URLSearchParams({api:'1',query:(h? h.name+' '+(h.address||h.city||h.pref):[$('pref').value,$('city').value,$('q').value,'ホテル 旅館'].filter(Boolean).join(' '))})}
 const word=s=>String(s||'').normalize('NFKC').toLowerCase().replace(/\s+/g,'');
 function match(h){const p=$('pref').value.trim(),c=word($('city').value),q=word($('q').value);
@@ -34,9 +57,16 @@ if(q){const text=word([h.name,h.pref,h.city,h.address,h.type].join(' '));if(!q.s
 return true;}
 function node(tag,cls,txt){const e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
 function draw(){const items=matches.slice(cursor,cursor+36);cursor+=items.length;for(const h of items){
-const card=node('article','hotel');card.append(node('strong','',h.name),node('div','kind',h.type||'宿泊施設'),node('p','place',[h.pref,h.city,h.address].filter(Boolean).join(' ')));
-const links=node('div','links');const a=node('a','','Googleマップで確認 ↗');a.href=mapUrl(h);a.target='_self';links.append(a);
-if(h.site&&/^https?:\/\//.test(h.site)){const b=node('a','','登録Webサイト ↗');b.href=h.site;b.target='_self';links.append(b)}card.append(links);$('results').append(card)}
+const card=node('article','hotel');const photo=photoFor(h);
+if(photo){const link=node('a','hotel-photo-link');link.href=photo.source||h.site;link.target='_blank';link.rel='noopener noreferrer';
+const img=node('img','hotel-photo');img.alt=`${h.name}の掲載サイトにある施設画像`;img.src=photo.url;img.loading='lazy';img.decoding='async';img.referrerPolicy='no-referrer';
+img.addEventListener('error',()=>{const fallback=node('div','photo-not-available','画像の外部表示が制限されています。施設サイトで写真を見る ↗');link.replaceChildren(fallback)});
+link.append(img,node('span','photo-source','施設掲載サイトの画像 ↗'));card.append(link);
+}else{const placeholder=node('div','photo-not-available','施設写真を確認中');
+if(h.site&&/^https:\/\//.test(h.site)){const a=node('a','','施設サイトで写真を見る ↗');a.href=h.site;a.target='_blank';a.rel='noopener noreferrer';placeholder.replaceChildren(a)}card.append(placeholder)}
+const body=node('div','hotel-body');body.append(node('strong','',h.name),node('div','kind',h.type||'宿泊施設'),node('p','place',[h.pref,h.city,h.address].filter(Boolean).join(' ')));
+const links=node('div','links');const a=node('a','','Googleマップで確認 ↗');a.href=mapUrl(h);a.target='_blank';a.rel='noopener noreferrer';links.append(a);
+if(h.site&&/^https?:\/\//.test(h.site)){const b=node('a','','登録Webサイト ↗');b.href=h.site;b.target='_blank';b.rel='noopener noreferrer';links.append(b)}body.append(links);card.append(body);$('results').append(card)}
 $('more').style.display=cursor<matches.length?'inline-block':'none';
 $('status').textContent=matches.length.toLocaleString('ja-JP')+'軒が検索条件に一致。'+cursor+'軒まで表示中。';}
 function search(){if(!all.length)return;matches=all.filter(match);cursor=0;$('results').replaceChildren();draw();}
@@ -45,8 +75,9 @@ $('clear').addEventListener('click',()=>{$('q').value='';$('pref').value='';$('c
 $('maps').addEventListener('click',()=>{window.location.assign(mapUrl());});
 $('more').addEventListener('click',draw);
 (async()=>{
-try{const [r,m]=await Promise.all([fetch('./hotels.json'),fetch('./catalog-info.json')]);if(!r.ok)throw Error('data status '+r.status);all=await r.json();
+try{const [r,m,f]=await Promise.all([fetch('./hotels.json'),fetch('./catalog-info.json'),fetch('./website-preview-photos.json').catch(()=>null)]);if(!r.ok)throw Error('data status '+r.status);all=await r.json();
 if(!Array.isArray(all))throw Error('invalid catalog');
+if(f?.ok){try{indexPhotos(await f.json())}catch(e){console.warn('Photo metadata could not be read',e)}}
 const info=m.ok?await m.json():{};const n=all.length;
 $('count').textContent=n.toLocaleString('ja-JP')+'軒を収録';
 $('meta').textContent='データ元: '+(info.source||'Overture Maps')+' ／ データ版: '+(info.release||'未確認');
