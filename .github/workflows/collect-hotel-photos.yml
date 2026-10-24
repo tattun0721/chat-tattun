@@ -1,0 +1,27 @@
+name: Collect licensed hotel photo assets
+on:
+  push:
+    branches: [main]
+    paths:
+      - "tools/fetch_hotel_photos.py"
+      - ".github/workflows/collect-hotel-photos.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install Pillow requests
+      - name: Collect only real, licensed photographs with author/source metadata
+        run: python -u tools/fetch_hotel_photos.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: licensed-real-hotel-photos
+          path: photo-assets/
+          retention-days: 30
