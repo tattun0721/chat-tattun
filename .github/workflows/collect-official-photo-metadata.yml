@@ -11,7 +11,7 @@ permissions:
 jobs:
   collect:
     runs-on: ubuntu-latest
-    timeout-minutes: 80
+    timeout-minutes: 150
     steps:
       - uses: actions/checkout@v4
         with: {persist-credentials: true}
@@ -19,7 +19,7 @@ jobs:
         with: {python-version: '3.12'}
       - run: pip install requests rapidfuzz
       - name: Inspect registered hotel sites for real representative images
-        run: python -u tools/collect_official_photo_metadata.py --limit 9000 --offset 4500 --workers 22
+        run: python -u tools/collect_official_photo_metadata.py --limit 45000 --offset 0 --workers 28
       - name: Record results
         run: |
           git config user.name 'chat-tattun-bot'
