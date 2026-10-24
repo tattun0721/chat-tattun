@@ -1,0 +1,35 @@
+name: Discover hotel photos from registered websites
+on:
+  push:
+    branches: [main]
+    paths:
+      - "tools/collect_official_photo_metadata.py"
+      - ".github/workflows/collect-official-photo-metadata.yml"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 80
+    steps:
+      - uses: actions/checkout@v4
+        with: {persist-credentials: true}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install requests rapidfuzz
+      - name: Inspect registered hotel sites for real representative images
+        run: python -u tools/collect_official_photo_metadata.py --limit 4500 --workers 18
+      - name: Record results
+        run: |
+          git config user.name 'chat-tattun-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add site/website-preview-photos.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Record property website photo metadata"
+            git push
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: property-website-photo-metadata
+          path: site/website-preview-photos.json
