@@ -3,14 +3,16 @@
 *{box-sizing:border-box}body{margin:0;background:#090b0d;color:#eee;font-family:system-ui,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif}a{color:#e0b16d}.hero{padding:62px 22px 72px;min-height:290px;background:linear-gradient(115deg,#10161a,#152d2f 45%,#70532e 130%);border-bottom:1px solid #644d2f}.wrap{max-width:1140px;margin:auto}.logo{font-size:21px;font-weight:900;letter-spacing:.18em}.logo span{color:#edbb73}.hero h1{font-size:clamp(28px,5vw,52px);line-height:1.22;margin:40px 0 12px}.hero p{max-width:780px;color:#d1d6d1;line-height:1.8;font-size:14px}.main{max-width:1140px;padding:0 18px 65px;margin:-27px auto 0;position:relative}.box{background:#161a1d;border:1px solid #41403a;border-radius:16px;padding:23px;margin-bottom:18px;box-shadow:0 12px 28px #0004}h2{font-size:21px;margin:0 0 16px}label{display:block;color:#d6b68c;font-size:12px;margin-bottom:6px}input,select{width:100%;background:#0c1113;border:1px solid #53544d;color:#fff;border-radius:10px;padding:12px;font:inherit;min-height:46px}input:focus,select:focus{outline:2px solid #b78943}button{background:#c79b56;color:#101010;border:0;border-radius:10px;padding:12px 17px;font-weight:800;cursor:pointer}button.alt{background:#293033;color:#e9d0a8;border:1px solid #766244}.fields{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}.small{font-size:12px;line-height:1.7;color:#a4aba9}.counter{color:#e6bd81;font-weight:800}.list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:18px}.hotel{border:1px solid #404b45;border-radius:12px;padding:17px;background:#10181a;min-width:0}.hotel strong{display:block;font-size:17px;margin-bottom:8px}.hotel .place{font-size:13px;color:#c7d1cb;min-height:40px}.hotel .kind{font-size:11px;color:#e6be81}.links{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}.links a{text-decoration:none;font-size:12px;border:1px solid #877354;padding:9px;border-radius:8px}.links a:hover{background:#2e352d}#status{line-height:1.8;font-size:13px}.badge{color:#aebfbb;font-size:11px}.filters{display:flex;flex-wrap:wrap;gap:7px}.filters button{font-size:12px;padding:9px 11px;background:#2d3839;color:#e0d4be;border:1px solid #485451}#more{display:none;margin:22px auto}.fine{font-size:12px;color:#c1b5a2}.maplink{background:transparent;color:#dcb37e;border:1px solid #87704e}.summary{display:flex;gap:15px;align-items:baseline;flex-wrap:wrap}.summary .count{font-size:23px;color:#e2b16b;font-weight:900}.warning{padding:13px 15px;background:#332815;border-left:3px solid #d19e5d;border-radius:6px;font-size:12px;line-height:1.7;margin-top:12px}
 @media(max-width:780px){.fields{grid-template-columns:1fr 1fr}.fields>div:first-child{grid-column:1/-1}.list{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:550px){.fields,.list{grid-template-columns:1fr}.fields>div:first-child{grid-column:auto}.main{padding:0 12px 40px}.box{padding:16px}.hero{padding:30px 16px 60px}.hero h1{margin-top:30px}}
 .hotel{padding:0;overflow:hidden}.hotel-body{padding:17px;min-width:0}.hotel-photo-link{display:block;position:relative;aspect-ratio:16/9;overflow:hidden;background:#1e2929;text-decoration:none}.hotel-photo{width:100%;height:100%;object-fit:cover;display:block;transition:transform .25s}.hotel-photo-link:hover .hotel-photo{transform:scale(1.025)}.photo-source{position:absolute;bottom:8px;left:9px;max-width:calc(100% - 18px);padding:4px 7px;border-radius:5px;background:#10191bdc;color:#fff;font-size:11px}.photo-not-available{display:flex;align-items:center;justify-content:center;min-height:110px;padding:15px;background:linear-gradient(130deg,#1a2426,#293334);color:#b9c7c4;text-align:center;font-size:12px;line-height:1.6}.hotel strong{overflow-wrap:anywhere}.hotel .place{overflow-wrap:anywhere}.hotel .links a{overflow-wrap:anywhere}.photo-count{color:#dfbb83;font-size:12px}
+ .hero-gallery{margin-top:24px;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(260px,1fr);gap:16px;align-items:stretch}.hero-slide{position:relative;min-height:230px;overflow:hidden;border:1px solid #5c604b;border-radius:14px;background:#152024}.hero-slide img{width:100%;height:100%;position:absolute;inset:0;object-fit:cover}.hero-slide a{position:absolute;inset:auto 0 0;background:linear-gradient(transparent,#07110ddd);padding:28px 16px 14px;color:white;text-decoration:none;font-weight:700}.hero-side{padding:22px;border:1px solid #69604b;border-radius:14px;background:#151e1dcf}.hero-side b{font-size:18px;color:#efc68c}.hero-side p{font-size:13px;margin-bottom:0}.chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.chip{background:#263336;border:1px solid #61736a;color:#f4dfc2;font-size:12px;padding:9px 12px;border-radius:99px}.chip:hover{background:#405450}.chip-note{font-size:11px;color:#b9c6c0;line-height:1.6}@media(max-width:780px){.hero-gallery{grid-template-columns:1fr}.hero-slide{min-height:190px}.hero-side{padding:16px}}@media(prefers-reduced-motion:reduce){.hotel-photo{transition:none}}
 </style></head><body>
-<header class="hero"><div class="wrap"><div class="logo">CHAT <span>TATTUN</span></div><h1>日本全国の宿を、<br>もっと自由に探す。</h1><p>実在する施設を公開データから検索。都道府県・市区町村・宿名・あいまいキーワードに対応。未確認の設備や公式サイトを勝手に保証しません。</p></div></header>
+<header class="hero"><div class="wrap"><div class="logo">CHAT <span>TATTUN</span></div><h1>日本全国の宿を、<br>もっと自由に探す。</h1><p>実在する施設を公開データから検索。都道府県・市区町村・宿名・あいまいキーワードに対応。未確認の設備や公式サイトを勝手に保証しません。</p><div class="hero-gallery"><div class="hero-slide" id="hero-slide" aria-label="実在する宿泊施設の写真"><div class="photo-not-available">実際の施設写真を読み込み中…</div></div><div class="hero-side"><b>旅のイメージから探す。</b><p>温泉地、海沿い、自然の近くなど、行きたい場所から候補を探せるで。</p><p class="chip-note">写真は施設の登録Webサイト掲載画像。表示可能なものだけ使用し、AI生成写真は使用しません。</p></div></div></div></header>
 <main class="main">
 <section class="box"><h2>全国の宿泊施設を検索</h2>
 <div class="fields">
 <div><label for="q">ホテル名・旅館名・あいまい検索</label><input id="q" placeholder="例：白浜、海の見えるホテル、箱根の旅館"></div>
 <div><label for="pref">都道府県</label><select id="pref"><option value="">全国すべて</option></select></div>
 <div><label for="city">市区町村</label><input id="city" placeholder="例：奈良市・白浜町"></div></div>
+<label>人気の地域・検索テーマ</label><div class="chips" id="chips"></div><p class="chip-note">「バー」「サウナ」「ミシュランキー」など設備・受賞歴は元データに情報がない場合があります。検索結果で保証するものではありません。</p>
 <div class="actions"><button id="search">条件で検索</button><button class="alt" id="clear">条件をクリア</button><button class="maplink" id="maps">Googleマップでも探す ↗</button></div>
 <div class="warning">設備・温泉・景観・喫煙室はデータ元で確認できない場合があるため、検索語でヒットしても設備の一致を保証しません。予約前に施設へ確認してな。</div></section>
 <section class="box"><h2>全国ホテル・旅館データベース</h2>
@@ -26,6 +28,21 @@ const prefs='北海道 青森県 岩手県 宮城県 秋田県 山形県 福島�
 const $=id=>document.getElementById(id);
 for(const p of prefs){const o=document.createElement('option');o.textContent=p;o.value=p;$('pref').append(o)}
 let all=[],matches=[],cursor=0;
+const searchChips=['箱根','有馬温泉','草津温泉','道後温泉','城崎温泉','下呂温泉','軽井沢','河口湖','白浜','淡路島','京都','博多','宮島','鳥羽','宮古島','小豆島','沖縄'];
+for(const value of searchChips){const b=document.createElement('button');b.type='button';b.className='chip';b.textContent=value;b.addEventListener('click',()=>{$('q').value=value;search();$('results').scrollIntoView({behavior:'smooth',block:'start'})});$('chips').append(b)}
+let slideshowTimer=null;
+function startHotelSlideshow(){
+ const list=[...photosById.values()].filter(p=>p.url&&p.source&&photoUrlSafe(p.url));
+ if(!list.length)return;
+ const selected=list.filter((p,i)=>i%Math.max(1,Math.floor(list.length/24))===0).slice(0,24);
+ let cursorSlide=0;const target=$('hero-slide');
+ function renderSlide(){
+  const photo=selected[cursorSlide++%selected.length];const img=document.createElement('img');img.alt=photo.name+'の施設掲載サイトの画像';img.src=photo.url;img.referrerPolicy='no-referrer';img.decoding='async';
+  img.addEventListener('error',()=>{if(cursorSlide<selected.length*2)renderSlide();else target.replaceChildren(node('div','photo-not-available','写真を表示できませんでした'))},{once:true});
+  const a=document.createElement('a');a.href=photo.source;a.target='_blank';a.rel='noopener noreferrer';a.textContent=photo.name+' ↗';target.replaceChildren(img,a);
+ }
+ renderSlide();if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){if(slideshowTimer)clearInterval(slideshowTimer);slideshowTimer=setInterval(renderSlide,6500)}
+}
 const photosById=new Map(),photosByName=new Map();
 function photoName(value){return String(value||'').normalize('NFKC').toLowerCase().replace(/[\s\p{P}\p{S}]/gu,'')}
 function photoUrlSafe(value){try{const u=new URL(value);return u.protocol==='https:'&&!u.username&&!u.password&&!/\.(svg|gif|ico)(?:$|\?)/i.test(u.pathname)}catch{return false}}
@@ -77,7 +94,7 @@ $('more').addEventListener('click',draw);
 (async()=>{
 try{const [r,m,f]=await Promise.all([fetch('./hotels.json'),fetch('./catalog-info.json'),fetch('./website-preview-photos.json').catch(()=>null)]);if(!r.ok)throw Error('data status '+r.status);all=await r.json();
 if(!Array.isArray(all))throw Error('invalid catalog');
-if(f?.ok){try{indexPhotos(await f.json())}catch(e){console.warn('Photo metadata could not be read',e)}}
+if(f?.ok){try{indexPhotos(await f.json());startHotelSlideshow()}catch(e){console.warn('Photo metadata could not be read',e)}}
 const info=m.ok?await m.json():{};const n=all.length;
 $('count').textContent=n.toLocaleString('ja-JP')+'軒を収録';
 $('meta').textContent='データ元: '+(info.source||'Overture Maps')+' ／ データ版: '+(info.release||'未確認');
