@@ -26,8 +26,12 @@ class OGParser(HTMLParser):
             k=(d.get('property') or d.get('name') or '').lower()
             if k in ('og:image','og:image:secure_url','twitter:image','og:title','twitter:title','description','og:site_name','og:type'):
                 self.tags.setdefault(k,d.get('content',''))
+        if tag=='meta' and (d.get('itemprop') or '').lower()=='image':
+            self.tags.setdefault('schema:image',d.get('content',''))
         if tag=='link' and (d.get('rel') or '').lower()=='image_src':
             self.tags.setdefault('image_src',d.get('href',''))
+        if tag=='link' and (d.get('rel') or '').lower()=='preload' and (d.get('as') or '').lower()=='image':
+            self.tags.setdefault('preload:image',d.get('href','') or d.get('imagesrcset','').split(',')[0].strip().split(' ')[0])
         # Property sites sometimes omit og:image but include visible hero photographs.
         if tag in ('img','source') and len(self.images)<120:
             hint=' '.join(str(d.get(k) or '') for k in ('class','id','alt','data-testid')).lower()
@@ -67,7 +71,7 @@ def image_url(img,base):
 def choose_photo(page,base):
     # Respect the source page's representative image first, then inspect its
     # main visual images. Never substitute a photograph of another property.
-    for key in ('og:image:secure_url','og:image','twitter:image','image_src'):
+    for key in ('og:image:secure_url','og:image','twitter:image','schema:image','image_src','preload:image'):
         candidate=page.tags.get(key)
         if candidate:
             result=image_url(candidate,base)
